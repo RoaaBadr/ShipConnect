@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+:root {
+  /*Font*/
+  --font-main: 'Open Sans', sans-serif;
+
+  /*Colors*/
+  --primary: #255C9C; /*form header, icons, bg-btn, input-border*/
+  --hover: #204C80; /* form subtext, btn-hover*/
+  --secondary-dark: #A4A4A4;  /* placeholder */
+  --secondary-light: #E4E6EC; /*bg-form*/
+  --requied: #3C4EC3;
+}
+
+body {
+  font-family: var(--font-main);
+  margin: 0;
+  padding: 0;
+}
