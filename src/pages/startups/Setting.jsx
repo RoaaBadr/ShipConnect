@@ -1,9 +1,10 @@
 import React from 'react'
+import ProfileForm from '../../components/ProfileForm'
 
 function Setting() {
   return (
     <div>
-      Setting worked
+      <ProfileForm/>
     </div>
   )
 }

@@ -10,6 +10,8 @@
   --secondary-dark: #A4A4A4;  /* placeholder */
   --secondary-light: #E4E6EC; /*bg-form*/
   --requied: #3C4EC3;
+  --text: #10233E;
+  --subtext: #10233e99;
 }
 
 body {
