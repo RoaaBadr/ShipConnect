@@ -9,9 +9,13 @@
   --hover: #204C80; /* form subtext, btn-hover*/
   --secondary-dark: #A4A4A4;  /* placeholder */
   --secondary-light: #E4E6EC; /*bg-form*/
-  --requied: #3C4EC3;
-  --text: #10233E;
-  --subtext: #10233e99;
+  --requied: #3C4EC3; /*connect btn */
+  --text: #10233E; /*review, card title */
+  --subtext: #10233e99; /* card subtitle  */
+  --gray: #CACED8; /*card border*/
+  --star: #F7CF37;
+  --success: #177D3F;
+  --error: #D80604;
 }
 
 body {
