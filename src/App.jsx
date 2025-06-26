@@ -2,9 +2,10 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import StartupDashboard from './pages/startups/Dashboard';
 import Contact from './pages/startups/Contact';
-import Shipments from './pages/startups/Shipments';
 import Setting from './pages/startups/Setting';
 import OffersList from './pages/startups/OffersList';
+import ShipmentList from './pages/startups/ShipmentList';
+import ShipmentDetails from './pages/startups/ShipmentDetails';
 
 function App() {
   return (
@@ -16,7 +17,8 @@ function App() {
             <Route path='/' element={ <StartupDashboard /> } />
             <Route path='/contact' element={ <Contact /> } />
             <Route path='/offers' element={ <OffersList /> } />
-            <Route path='/shipments' element={ <Shipments /> } />
+            <Route path='/shipments' element={ <ShipmentList /> } />
+            <Route path='/shipment/:id' element={ <ShipmentDetails /> } />
             <Route path='/setting' element={ <Setting /> } />
 
                         {/* Shipping Routes */}
