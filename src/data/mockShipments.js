@@ -5,8 +5,7 @@ export const mockShipments = [
     shippingCost: '$49.00',
     trackNum: "FT-9384756",
     status: 'Delivered',
-    shippedDate: 'May 12, 2025',
-    deliveredDate: 'May 15, 2025',
+    date: 'May 12, 2025',
     address: '22 Misr St, Alex, Egypt',
   },
   {
@@ -14,8 +13,7 @@ export const mockShipments = [
     company: 'Fasttrack Logistics',
     shippingCost: '$49.00',
     status: 'On Transit',
-    shippedDate: 'May 13, 2025',
-    deliveredDate: 'May 17, 2025',
+    date: 'May 13, 2025',
     address: '22 Misr St, Alex, Egypt',
   },
   {
@@ -23,7 +21,7 @@ export const mockShipments = [
     company: 'ADN Supply',
     shippingCost: '$40.00',
     status: 'Pending',
-    requestDate: 'June 21, 2025',
+    date: 'June 21, 2025',
     address: 'Riyadh, Saudi Arabia',
   }
 ]
