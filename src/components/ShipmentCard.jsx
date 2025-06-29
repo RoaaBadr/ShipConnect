@@ -1,10 +1,10 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
-  IoIosCheckmarkCircleOutline, // Delivered
-  IoIosTimer,                  // On Transit
-  IoIosInformationCircleOutline // Pending
+  IoIosCheckmarkCircleOutline, 
+  IoIosTimer,
 } from "react-icons/io"
+import { PiWarningCircle } from "react-icons/pi";
 
 export default function ShipmentCard({ shipment }) {
   const navigate = useNavigate()
@@ -12,11 +12,11 @@ export default function ShipmentCard({ shipment }) {
   const getStatusIcon = (status) => {
     switch (status) {
       case 'Delivered':
-        return <IoIosCheckmarkCircleOutline className="text-green-600 text-lg mr-1" />
+        return <IoIosCheckmarkCircleOutline className="bg-[#B1F7CB] text-[#1CA651] text-lg mr-1" />
       case 'On Transit':
-        return <IoIosTimer className="text-yellow-600 text-lg mr-1" />
+        return <IoIosTimer className="bg-[#FFE1CD] text-[#DF6109] text-lg mr-1" />
       case 'Pending':
-        return <IoIosInformationCircleOutline className="text-orange-600 text-lg mr-1" />
+        return <PiWarningCircle className="bg-[#FEEDAA] text-[#C5A30D] text-lg mr-1" />
       default:
         return null
     }
@@ -25,11 +25,11 @@ export default function ShipmentCard({ shipment }) {
   const getStatusColor = (status) => {
     switch (status) {
       case 'Delivered':
-        return 'bg-green-100 text-green-700'
+        return 'bg-[#B1F7CB] text-[#1CA651]'
       case 'On Transit':
-        return 'bg-yellow-100 text-yellow-700'
+        return 'bg-[#FFE1CD] text-[#DF6109]'
       case 'Pending':
-        return 'bg-orange-100 text-orange-700'
+        return 'bg-[#FEEDAA] text-[#C5A30D]'
       default:
         return 'bg-gray-100 text-gray-700'
     }
@@ -44,14 +44,14 @@ export default function ShipmentCard({ shipment }) {
       <div className="flex justify-between items-center">
         <p className="font-normal text-xl text-slate-800">ID #{shipment.id}</p>
 
-        <span className={`flex items-center text-sm px-3 py-1 rounded-lg 
+        <span className={`flex items-center gap-1 text-sm px-5 py-3 rounded-sm w-[140px]
           ${getStatusColor(shipment.status)}`}>
           {getStatusIcon(shipment.status)}
           {shipment.status}
         </span>
       </div>
 
-      <p className="text-gray-500 text-sm mt-1">
+      <p className="text-gray-500 text-sm">
         {shipment.date && `${shipment.date}`}
       </p>
     </div>

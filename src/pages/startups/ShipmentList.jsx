@@ -6,10 +6,10 @@ import ShipmentCard from '../../components/ShipmentCard'
 import { CiSearch } from "react-icons/ci"
 import { IoMdAdd, IoIosCloseCircleOutline } from "react-icons/io"
 import {
-  IoIosCheckmarkCircleOutline, // delivered
-  IoIosTimer, // on transit
-  IoIosInformationCircleOutline, // pending
-  IoIosOptions // all
+  IoIosCheckmarkCircleOutline, 
+  IoIosTimer, 
+  IoIosInformationCircleOutline, 
+  IoIosOptions
 } from "react-icons/io";
 import { PiPackageLight} from "react-icons/pi"
 
@@ -49,7 +49,7 @@ export default function ShipmentsList({ shipments, setShipments }) {
               onClick={() => setSearchTerm('')}
               className="pr-3 hover:text-slate-700"
             >
-              <IoIosCloseCircleOutline style={{ color: "var(--primary)" }} size={18} />
+              <IoIosCloseCircleOut style={{ color: "var(--primary)" }} size={18} />
             </button>
           )}
         </div>
