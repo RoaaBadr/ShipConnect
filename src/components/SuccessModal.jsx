@@ -20,7 +20,7 @@ export default function SuccessModal({ onClose, onNavigate }) {
             onClick={onNavigate}
             className="cursor-pointer flex items-center gap-2 px-6 py-2 bg-[#255C9C] text-white rounded-xl hover:bg-blue-900"
           >
-            <IoCheckmarkCircleOutline size={20}/>OK
+            <IoCheckmarkCircleOutline size={20}/> OK
           </button>
         </div>
       </div>

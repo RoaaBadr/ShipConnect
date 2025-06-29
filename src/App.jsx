@@ -25,8 +25,8 @@ function App() {
             <Route path='/' element={<StartupDashboard />} />
             <Route path='/contact' element={<Contact />} />
             <Route path='/offers' element={<OffersList />} />
-            <Route path='/shipments' element={<ShipmentList shipments={shipments} setShipments={setShipments}/>} />
-            <Route path='/shipment/:id' element={<ShipmentDetails />} />
+            <Route path='/shipments' element={<ShipmentList shipments={shipments} setShipments={setShipments} />} />
+            <Route path='/shipment/:id' element={<ShipmentDetails shipments={shipments} setShipments={setShipments} />} />
             <Route path='/setting' element={<Setting />} />
             <Route path="/add-shipment" element={<AddShipment onAddShipment={handleAddShipment} />} />
 

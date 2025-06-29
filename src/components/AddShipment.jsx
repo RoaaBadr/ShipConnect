@@ -24,7 +24,7 @@ export default function AddShipment({ onAddShipment }) {
   const handleSubmit = (e) => {
     e.preventDefault()
     onAddShipment(formData)
-    setShowModal(true)
+    setShowModal(true) // show modal 
   }
 
   const handleCloseModal = () => {
@@ -46,7 +46,7 @@ export default function AddShipment({ onAddShipment }) {
 
   return (
     <div className="max-w-3xl mx-auto p-6 space-y-4 relative">
-      <h2 className="text-2xl font-bold"> Add Shipment</h2>
+      <h2 className="text-2xl font-bold">➕ Add Shipment</h2>
 
       <form onSubmit={handleSubmit} className="border p-4 rounded-md bg-gray-50 space-y-3">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">

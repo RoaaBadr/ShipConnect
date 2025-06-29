@@ -1,28 +1,24 @@
 import React, { useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate} from 'react-router-dom'
 import EditModal from '../components/EditModal'
-import { mockShipments } from '../data/mockShipments'
 
 import { PiPackageLight } from 'react-icons/pi'
-import { HiOutlineCalendarDateRange, HiOutlineMapPin  } from "react-icons/hi2";
+import { HiOutlineCalendarDateRange, HiOutlineMapPin } from "react-icons/hi2";
 import { LuWeight } from "react-icons/lu";
 import { RxDimensions } from "react-icons/rx";
 import { AiOutlineEdit } from "react-icons/ai";
 
-export default function EditShipmentForm({ onUpdate }) {
+export default function EditShipmentForm({ shipment, onUpdate, onClose }) {
   const navigate = useNavigate()
-
-  const { id } = useParams()
   const [showModal, setShowModal] = useState(false)
 
-  const shipment = mockShipments.find((s) => s.id === id)
   const [formData, setFormData] = useState({
     id: shipment?.id || '',
-    requestDate: shipment?.date || '',
-    weight: '',
-    goodsType: '',
-    dimensions: '',
-    destination: shipment?.address || '',
+    requestDate: shipment?.requestDate || '',
+    weight: shipment?.weight || '',
+    goodsType: shipment?.goodsType || '',
+    dimensions: shipment?.dimensions || '',
+    destination: shipment?.destination || '',
   })
 
   const handleChange = (field, value) => {
@@ -30,30 +26,22 @@ export default function EditShipmentForm({ onUpdate }) {
   }
 
   const handleSubmit = (e) => {
-    e.preventDefault()    
-    console.log('Updated Shipment:', formData)
-
-    if (onUpdate) {
+    e.preventDefault()
+    console.log(formData)
     onUpdate(formData)
-  }
+    console.log("data sended")
     setShowModal(true)
   }
+
   const handleCloseModal = () => {
     setShowModal(false)
-    setFormData({
-      id: '',
-      company: '',
-      status: 'Pending',
-      address: '',
-      shippingCost: '',
-      shippedDate: '',
-      deliveredDate: ''
-    })
+    onClose()
   }
 
   const handleNavigate = () => {
     navigate('/shipments')
   }
+
   if (!shipment) {
     return <p className="text-center p-8 text-red-500">Shipment not found.</p>
   }
@@ -71,7 +59,7 @@ export default function EditShipmentForm({ onUpdate }) {
         <div className="grid grid-cols-2 md:grid-cols-2 gap-5">
 
           <div>
-            <label className="block mb-1 text-[#204C80]">Shipment Request ID 
+            <label className="block mb-1 text-[#204C80]">Shipment Request ID
               <span className="font-normal text-xs text-[#3C4EC3]"> *</span>
             </label>
             <div className="flex items-center border border-[#255C9C] rounded-2xl px-3 py-2 mt-1">
@@ -160,7 +148,7 @@ export default function EditShipmentForm({ onUpdate }) {
             </label>
             <div className="flex items-center border border-[#255C9C] rounded-2xl px-3 py-2 mt-1">
               <HiOutlineMapPin className="text-[#204C80] mr-2 w-5 h-5" />
-               <input
+              <input
                 type="text"
                 value={formData.destination}
                 onChange={(e) => handleChange('destination', e.target.value)}
@@ -170,7 +158,7 @@ export default function EditShipmentForm({ onUpdate }) {
               />
             </div>
           </div>
-          
+
         </div>
 
         <div className="pt-4">
@@ -186,7 +174,6 @@ export default function EditShipmentForm({ onUpdate }) {
       {/* Success Modal */}
       {showModal && (
         <EditModal
-        onUpdate={handleUpdate}
           onClose={handleCloseModal}
           onNavigate={handleNavigate}
         />

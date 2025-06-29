@@ -1,58 +1,51 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { mockShipments } from '../../data/mockShipments'
 import EditShipmentForm from '../../components/EditShipmentForm'
 
-import {IoIosCheckmarkCircleOutline, IoIosTimer } from "react-icons/io"
+import { IoIosCheckmarkCircleOutline, IoIosTimer } from "react-icons/io"
 import { PiWarningCircle } from "react-icons/pi";
 
-import {IoCloseCircleOutline} from "react-icons/io5";
+import { IoCloseCircleOutline } from "react-icons/io5";
 import { AiOutlineEdit } from "react-icons/ai";
 
 import { CiDeliveryTruck } from "react-icons/ci";
 import { FaPaperPlane, FaRegCommentDots } from 'react-icons/fa'
 import { FaChevronLeft } from 'react-icons/fa6'
 
-export default function ShipmentDetails() {
+export default function ShipmentDetails({ shipments, setShipments }) {
   const { id } = useParams()
   const navigate = useNavigate()
-  const shipment = mockShipments.find((s) => s.id === id)
 
+  const [shipmentData, setShipmentData] = useState(() =>
+    shipments.find((s) => s.id === id)
+  )
+
+  useEffect(() => {
+    const updated = shipments.find((s) => s.id === id)
+    setShipmentData(updated)
+  }, [shipments, id])
   const [editModalOpen, setEditModalOpen] = useState(false)
 
-  if (!shipment) return <div className="p-6 text-center text-red-600">Shipment not found.</div>
+  if (!shipmentData) return <div className="p-6 text-center text-red-600">Shipment not found.</div>
 
   const handleUpdate = (updatedShipment) => {
-    // update data logic here
-
+    const updatedShipments = shipments.map((s) =>
+      s.id === updatedShipment.id ? { ...s, ...updatedShipment } : s
+    )
+    setShipments(updatedShipments)
   }
 
   return (
     <div className="min-h-screen bg-[#E4E6EC] px-4 py-6">
-      <div className="flex items-center gap-2 my-4 pb-4 text-[#10233E] max-w-4xl mx-auto">
-        <FaChevronLeft className="cursor-pointer" onClick={() => navigate(-1)} />
-        <span className="text-lg text-[#1A3D65] font-bold">Transit ID</span>
-        <span className="text-lg text-[#10233E99]">#{shipment.id}</span>
-      </div>
+
 
       <div className="bg-white rounded-2xl shadow-md pt-6 pb-6 px-6 max-w-4xl mx-auto space-y-5">
         {/* Top Badge */}
         <div className="flex justify-between items-center">
           <div></div>
-          {/* Delivered Top */}
-          {shipment.status === 'Delivered' && (
-            <span className="bg-[#B1F7CB] text-[#1CA651] px-4 py-3 text-sm rounded-sm flex items-center gap-2">
-              <IoIosCheckmarkCircleOutline className="text-xl" /> Delivered
-            </span>
-          )}
-          {/* On Transit Top */}
-          {shipment.status === 'On Transit' && (
-            <span className="bg-[#FFE1CD] text-[#DF6109] px-4 py-3 text-sm rounded-sm flex items-center gap-2">
-              <IoIosTimer className="text-xl" /> On Transit
-            </span>
-          )}
+
           {/* Pending Top */}
-          {shipment.status === 'Pending' && (
+          {shipmentData.status === 'Pending' && (
             <span className="bg-[#FEEDAA] text-[#C5A30D] px-4 py-3 text-sm rounded-sm flex items-center gap-2">
               <PiWarningCircle className="text-xl" /> Pending
             </span>
@@ -60,112 +53,34 @@ export default function ShipmentDetails() {
         </div>
 
         <div className="m-auto px-25 space-y-12 py-5">
-          {/* Delivered status */}
-          {shipment.status === 'Delivered' && (
-            <>
-              {/* Info */}
-              <div className="grid md:grid-cols-2 gap-6 text-sm text-[#10233E99]">
-                <div>
-                  <p className="mb-1">Shipping Company Name</p>
-                  <p className="text-base font-bold text-[#10233E]">{shipment.company}</p>
-                </div>
-                <div>
-                  <p className="mb-1">Shipping Cost</p>
-                  <p className="text-base font-bold text-[#10233E]">{shipment.shippingCost}</p>
-                </div>
-                <div>
-                  <p className="mb-1">Tracking Number</p>
-                  <p className="text-base font-bold text-[#10233E]">{shipment.trackNum}</p>
-                </div>
-                <div>
-                  <p className="mb-1">Shipping Date</p>
-                  <p className="text-base font-bold text-[#10233E]">Shipped: {shipment.shippedDate}</p>
-                </div>
-                <div>
-                  <p className="mb-1">Destination Address</p>
-                  <p className="text-base font-bold text-[#10233E]">{shipment.address}</p>
-                </div>
-                <div>
-                  <p className="mb-1">Delivery Date</p>
-                  <p className="text-base font-bold text-[#10233E]">Delivered: {shipment.deliveredDate}</p>
-                </div>
-              </div>
-              {/* Feedback button */}
-              <div className="flex gap-2 items-center py-4">
-                <div className="flex items-center border border-[#255C9C] rounded-2xl px-3 py-2 flex-1">
-                  <FaRegCommentDots className="text-[#204C80] mr-2" size={16} />
-                  <input type="text" placeholder="enter your feedback" className="text-sm focus:outline-none w-full" />
-                </div>
-                <button className="bg-[#255C9C] p-3 rounded-xl hover:bg-blue-900 cursor-pointer">
-                  <FaPaperPlane className="text-sm text-white" />
-                </button>
-              </div>
-            </>
-          )}
 
-          {/* On Transit status */}
-          {shipment.status === 'On Transit' && (
-            <>
-              {/* Info */}
-              <div className="grid md:grid-cols-2 gap-6 text-sm text-[#10233E99]">
-                <div>
-                  <p className="mb-1">Shipping Company Name</p>
-                  <p className="text-base font-bold text-[#10233E]">{shipment.company}</p>
-                </div>
-                <div>
-                  <p className="mb-1">Shipping Cost</p>
-                  <p className="text-base font-bold text-[#10233E]">{shipment.shippingCost}</p>
-                </div>
-                <div>
-                  <p className="mb-1">Tracking Number</p>
-                  <p className="text-base font-bold text-[#10233E]">{shipment.trackNum}</p>
-                </div>
-                <div>
-                  <p className="mb-1">Shipping Date</p>
-                  <p className="text-base font-bold text-[#10233E]">Shipped: {shipment.shippedDate}</p>
-                </div>
-                <div>
-                  <p className="mb-1">Destination Address</p>
-                  <p className="text-base font-bold text-[#10233E]">{shipment.address}</p>
-                </div>
-                <div>
-                  <p className="mb-1">Esimated Delivery Date</p>
-                  <p className="text-base font-bold text-[#10233E]">Delivered: {shipment.deliveredDate}</p>
-                </div>
-              </div>
-              <div className="pt-4">
-                <button className="flex items-center gap-2 bg-[#F9751C] text-white px-8 py-2 rounded-3xl hover:bg-orange-500 cursor-pointer"><CiDeliveryTruck size={20} /> Track</button>
-              </div>
-            </>
-          )}
-
-          {shipment.status === 'Pending' && (
+          {shipmentData.status === 'Pending' && (
             <>
               {/* Info */}
               <div className="grid md:grid-cols-2 gap-6 text-sm text-[#10233E99]">
                 <div>
                   <p className="mb-1">Shipping Requeest ID</p>
-                  <p className="text-base font-bold text-[#10233E]">{shipment.requestId}</p>
+                  <p className="text-base font-bold text-[#10233E]">{shipmentData.requestId}</p>
                 </div>
                 <div>
                   <p className="mb-1">Request Date</p>
-                  <p className="text-base font-bold text-[#10233E]">{shipment.requestDate}</p>
+                  <p className="text-base font-bold text-[#10233E]">{shipmentData.requestDate}</p>
                 </div>
                 <div>
                   <p className="mb-1">Shipping Weight</p>
-                  <p className="text-base font-bold text-[#10233E]">{shipment.weight} kg</p>
+                  <p className="text-base font-bold text-[#10233E]">{shipmentData.weight} kg</p>
                 </div>
                 <div>
                   <p className="mb-1">Type Of Goods</p>
-                  <p className="text-base font-bold text-[#10233E]">Shipped: {shipment.goodsType}</p>
+                  <p className="text-base font-bold text-[#10233E]">Shipped: {shipmentData.goodsType}</p>
                 </div>
                 <div>
                   <p className="mb-1">Shipping Dimensions</p>
-                  <p className="text-base font-bold text-[#10233E]">{shipment.dimensions} cm</p>
+                  <p className="text-base font-bold text-[#10233E]">{shipmentData.dimensions} cm</p>
                 </div>
                 <div>
                   <p className="mb-1">Shipping Destination</p>
-                  <p className="text-base font-bold text-[#10233E]">Delivered: {shipment.destination}</p>
+                  <p className="text-base font-bold text-[#10233E]">Delivered: {shipmentData.destination}</p>
                 </div>
               </div>
               <div className="pt-4 flex gap-4">
@@ -176,7 +91,7 @@ export default function ShipmentDetails() {
               {/* Edit Form  */}
               {editModalOpen && (
                 <EditShipmentForm
-                  shipment={shipment}
+                  shipment={shipmentData}
                   onUpdate={handleUpdate}
                   onClose={() => setEditModalOpen(false)}
                 />
