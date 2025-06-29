@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
-  IoIosCheckmarkCircleOutline, 
+  IoIosCheckmarkCircleOutline,
   IoIosTimer,
 } from "react-icons/io"
 import { PiWarningCircle } from "react-icons/pi";
@@ -37,7 +37,7 @@ export default function ShipmentCard({ shipment }) {
 
   return (
     <div
-      onClick={() => navigate(`/shipment/${shipment.id}`)}
+      onClick={() => shipment.id && navigate(`/shipment/${shipment.id}`)}
       style={{ borderColor: "#B0B6C4" }}
       className="cursor-pointer border rounded-lg p-4 shadow-xs hover:shadow-sm transition"
     >
@@ -52,7 +52,8 @@ export default function ShipmentCard({ shipment }) {
       </div>
 
       <p className="text-gray-500 text-sm">
-        {shipment.date && `${shipment.date}`}
+        {shipment.status === 'Pending' && shipment.requestDate}
+        {(shipment.status === 'Delivered' || shipment.status === 'On Transit') && shipment.deliveredDate}
       </p>
     </div>
   )
