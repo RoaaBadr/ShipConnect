@@ -5,7 +5,7 @@ import EditModal from '../components/EditModal'
 import { IoClose } from "react-icons/io5";
 import { PiPackageLight } from 'react-icons/pi'
 import { HiOutlineCalendarDateRange, HiOutlineMapPin } from "react-icons/hi2";
-import { LuWeight } from "react-icons/lu";
+import { LiaWeightHangingSolid } from "react-icons/lia";
 import { RxDimensions } from "react-icons/rx";
 import { AiOutlineEdit } from "react-icons/ai";
 
@@ -104,7 +104,7 @@ export default function EditShipmentForm({ shipment, onUpdate, onClose }) {
               <span className="font-normal text-xs text-[#3C4EC3]"> *</span>
             </label>
             <div className="flex items-center border border-[#255C9C] rounded-2xl px-3 py-2 mt-1">
-              <LuWeight className="text-[#204C80] mr-2 w-5 h-5" />
+              <LiaWeightHangingSolid className="text-[#204C80] mr-2 w-5 h-5" />
               <input
                 type="text"
                 value={formData.weight}
