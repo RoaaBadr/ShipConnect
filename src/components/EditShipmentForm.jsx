@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import { useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import EditModal from '../components/EditModal'
 
+import { IoClose } from "react-icons/io5";
 import { PiPackageLight } from 'react-icons/pi'
 import { HiOutlineCalendarDateRange, HiOutlineMapPin } from "react-icons/hi2";
 import { LuWeight } from "react-icons/lu";
@@ -50,8 +51,15 @@ export default function EditShipmentForm({ shipment, onUpdate, onClose }) {
     <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
       <form
         onSubmit={handleSubmit}
-        className="max-w-4xl w-5xl mx-auto bg-white p-6 rounded-xl space-y-6 shadow-md animate-fade-in"
+        className="relative max-w-4xl w-5xl mx-auto bg-white p-6 rounded-xl space-y-6 shadow-md animate-fade-in"
       >
+        <button
+          type="button"
+          onClick={onClose}
+          className="cursor-pointer absolute top-4 right-4 text-gray-500 hover:text-red-500 text-2xl"
+        >
+          <IoClose />
+        </button>
         <h2 className="text-xl font-bold text-[#1A3D65] flex items-center gap-2">
           <PiPackageLight className="text-2xl" /> Shipment Details
         </h2>
