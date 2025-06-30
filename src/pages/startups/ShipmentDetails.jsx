@@ -15,6 +15,7 @@ import { FaChevronLeft } from 'react-icons/fa6'
 export default function ShipmentDetails({ shipments, setShipments }) {
   const { id } = useParams()
   const navigate = useNavigate()
+  const [editModalOpen, setEditModalOpen] = useState(false)
 
   const [shipmentData, setShipmentData] = useState(() =>
     shipments.find((s) => s.id === id)
@@ -24,15 +25,17 @@ export default function ShipmentDetails({ shipments, setShipments }) {
     const updated = shipments.find((s) => s.id === id)
     setShipmentData(updated)
   }, [shipments, id])
-  const [editModalOpen, setEditModalOpen] = useState(false)
 
   if (!shipmentData) return <div className="p-6 text-center text-red-600">Shipment not found.</div>
 
   const handleUpdate = (updatedShipment) => {
     const updatedShipments = shipments.map((s) =>
-      s.id === updatedShipment.id ? { ...s, ...updatedShipment } : s
+      s.id === shipmentData.id ? { ...s, ...updatedShipment } : s
     )
     setShipments(updatedShipments)
+
+    // update the local shipmentData immediately
+    setShipmentData((prev) => ({ ...prev, ...updatedShipment }))
   }
 
   return (
@@ -82,7 +85,7 @@ export default function ShipmentDetails({ shipments, setShipments }) {
                 </div>
                 <div>
                   <p className="mb-1">Shipping Cost</p>
-                  <p className="text-base font-bold text-[#10233E]">{shipmentData.shippingCost}</p>
+                  <p className="text-base font-bold text-[#10233E]">${shipmentData.shippingCost}</p>
                 </div>
                 <div>
                   <p className="mb-1">Tracking Number</p>
@@ -90,15 +93,25 @@ export default function ShipmentDetails({ shipments, setShipments }) {
                 </div>
                 <div>
                   <p className="mb-1">Shipping Date</p>
-                  <p className="text-base font-bold text-[#10233E]">Shipped: {shipmentData.shippedDate}</p>
+                  <p className="text-base font-bold text-[#10233E]">
+                    Shipped: {new Date(shipmentData.shippedDate).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}</p>
                 </div>
                 <div>
                   <p className="mb-1">Destination Address</p>
-                  <p className="text-base font-bold text-[#10233E]">{shipmentData.address}</p>
+                  <p className="text-base font-bold text-[#10233E]">{shipmentData.recipientAddress}</p>
                 </div>
                 <div>
                   <p className="mb-1">Delivery Date</p>
-                  <p className="text-base font-bold text-[#10233E]">Delivered: {shipmentData.deliveredDate}</p>
+                  <p className="text-base font-bold text-[#10233E]">
+                    Delivered: {new Date(shipmentData.requestDate).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}</p>
                 </div>
               </div>
               {/* Feedback button */}
@@ -125,7 +138,7 @@ export default function ShipmentDetails({ shipments, setShipments }) {
                 </div>
                 <div>
                   <p className="mb-1">Shipping Cost</p>
-                  <p className="text-base font-bold text-[#10233E]">{shipmentData.shippingCost}</p>
+                  <p className="text-base font-bold text-[#10233E]">${shipmentData.shippingCost}</p>
                 </div>
                 <div>
                   <p className="mb-1">Tracking Number</p>
@@ -133,16 +146,27 @@ export default function ShipmentDetails({ shipments, setShipments }) {
                 </div>
                 <div>
                   <p className="mb-1">Shipping Date</p>
-                  <p className="text-base font-bold text-[#10233E]">Shipped: {shipmentData.shippedDate}</p>
+                  <p className="text-base font-bold text-[#10233E]">
+                    Shipped: {new Date(shipmentData.requestDate).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}
+                  </p>
                 </div>
                 <div>
                   <p className="mb-1">Destination Address</p>
-                  <p className="text-base font-bold text-[#10233E]">{shipmentData.address}</p>
+                  <p className="text-base font-bold text-[#10233E]">{shipmentData.recipientAddress}</p>
                 </div>
                 <div>
                   <p className="mb-1">Esimated Delivery Date</p>
-                  <p className="text-base font-bold text-[#10233E]">Delivered: {shipmentData.deliveredDate}</p>
-                </div>
+                  <p className="text-base font-bold text-[#10233E]">
+                    Delivered: {new Date(shipmentData.requestDate).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}
+                  </p>                </div>
               </div>
               <div className="pt-4">
                 <button className="flex items-center gap-2 bg-[#F9751C] text-white px-8 py-2 rounded-3xl hover:bg-orange-500 cursor-pointer"><CiDeliveryTruck size={20} /> Track</button>
@@ -150,6 +174,7 @@ export default function ShipmentDetails({ shipments, setShipments }) {
             </>
           )}
 
+          {/* Pending status */}
           {shipmentData.status === 'Pending' && (
             <>
               {/* Info */}
@@ -160,7 +185,13 @@ export default function ShipmentDetails({ shipments, setShipments }) {
                 </div>
                 <div>
                   <p className="mb-1">Request Date</p>
-                  <p className="text-base font-bold text-[#10233E]">{shipmentData.requestDate}</p>
+                  <p className="text-base font-bold text-[#10233E]">
+                    {new Date(shipmentData.requestDate).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}
+                  </p>                
                 </div>
                 <div>
                   <p className="mb-1">Shipping Weight</p>
@@ -168,7 +199,7 @@ export default function ShipmentDetails({ shipments, setShipments }) {
                 </div>
                 <div>
                   <p className="mb-1">Type Of Goods</p>
-                  <p className="text-base font-bold text-[#10233E]">Shipped: {shipmentData.goodsType}</p>
+                  <p className="text-base font-bold text-[#10233E]">{shipmentData.shipmentType}</p>
                 </div>
                 <div>
                   <p className="mb-1">Shipping Dimensions</p>
@@ -176,7 +207,7 @@ export default function ShipmentDetails({ shipments, setShipments }) {
                 </div>
                 <div>
                   <p className="mb-1">Shipping Destination</p>
-                  <p className="text-base font-bold text-[#10233E]">Delivered: {shipmentData.destination}</p>
+                  <p className="text-base font-bold text-[#10233E]">{shipmentData.recipientAddress}</p>
                 </div>
               </div>
               <div className="pt-4 flex gap-4">

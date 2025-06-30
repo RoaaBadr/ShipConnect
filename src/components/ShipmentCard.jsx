@@ -52,8 +52,13 @@ export default function ShipmentCard({ shipment }) {
       </div>
 
       <p className="text-gray-500 text-sm">
-        {shipment.status === 'Pending' && shipment.requestDate}
-        {(shipment.status === 'Delivered' || shipment.status === 'On Transit') && shipment.deliveredDate}
+        {shipment.status && `${
+          new Date(shipment.requestDate).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          })
+        }`}
       </p>
     </div>
   )

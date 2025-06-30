@@ -49,7 +49,7 @@ export default function ShipmentsList({ shipments, setShipments }) {
               onClick={() => setSearchTerm('')}
               className="pr-3 hover:text-slate-700"
             >
-              <IoIosCloseCircleOut style={{ color: "var(--primary)" }} size={18} />
+              <IoIosCloseCircleOutline style={{ color: "var(--primary)" }} size={18} />
             </button>
           )}
         </div>

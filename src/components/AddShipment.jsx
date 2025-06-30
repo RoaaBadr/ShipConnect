@@ -3,21 +3,13 @@ import { useNavigate } from 'react-router-dom'
 import SuccessModal from '../components/SuccessModal'
 
 import { PiRocketLight, PiPackageLight } from "react-icons/pi";
-import { IoMdAdd } from "react-icons/io"
 import { LiaWeightHangingSolid } from "react-icons/lia";
 import { RxDimensions } from "react-icons/rx";
 import { FaChevronLeft } from 'react-icons/fa6'
-import { HiOutlineCalendarDateRange, HiOutlineMapPin } from "react-icons/hi2";
-import { CiBag1 } from "react-icons/ci";
-import { CiDeliveryTruck } from "react-icons/ci";
-
-import {
-  IoIosCheckmarkCircleOutline,
-  IoIosTimer,
-} from "react-icons/io"
-import { BsEye, BsEyeSlash, BsPerson } from "react-icons/bs";
-import { CiLock, CiMail, CiLocationOn } from "react-icons/ci";
-import { IoIosArrowDown } from "react-icons/io";
+import { HiOutlineCalendarDateRange } from "react-icons/hi2";
+import { IoIosTimer, IoIosArrowDown, IoMdAdd } from "react-icons/io"
+import { BsPerson } from "react-icons/bs";
+import { CiMail, CiLocationOn, CiDeliveryTruck, CiBag1 } from "react-icons/ci";
 
 import { v4 as uuid } from 'uuid';
 
@@ -58,7 +50,8 @@ export default function AddShipment({ onAddShipment }) {
     // Add generated ID
     const newShipment = {
       ...formData,
-      id: uuid().slice(0, 8)
+      id: uuid().slice(0, 8),
+      requestId: uuid().slice(0, 8) // request ID
     }
     console.log(newShipment)
     onAddShipment(newShipment)

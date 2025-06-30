@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { mockOffers } from "../../data/mockOffers";
-import OfferCard from "../../components/OfferCard";
+import OfferCard from "../../components/OfferCard/OfferCard";
 
 export default function OffersList() {
   const [data, setData] = useState(mockOffers);

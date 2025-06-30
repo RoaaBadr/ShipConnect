@@ -14,12 +14,12 @@ export default function EditShipmentForm({ shipment, onUpdate, onClose }) {
   const [showModal, setShowModal] = useState(false)
 
   const [formData, setFormData] = useState({
-    id: shipment?.id || '',
+    requestId: shipment?.requestId || '',
     requestDate: shipment?.requestDate || '',
     weight: shipment?.weight || '',
-    goodsType: shipment?.goodsType || '',
+    shipmentType: shipment?.shipmentType || '',
     dimensions: shipment?.dimensions || '',
-    destination: shipment?.destination || '',
+    recipientAddress: shipment?.recipientAddress || '',
   })
 
   const handleChange = (field, value) => {
@@ -29,7 +29,7 @@ export default function EditShipmentForm({ shipment, onUpdate, onClose }) {
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log(formData)
-    onUpdate(formData)
+    onUpdate({ id: shipment.id, ...formData })
     console.log("data sended")
     setShowModal(true)
   }
@@ -65,7 +65,7 @@ export default function EditShipmentForm({ shipment, onUpdate, onClose }) {
         </h2>
 
         <div className="grid grid-cols-2 md:grid-cols-2 gap-5">
-
+          {/* requested ID */}
           <div>
             <label className="block mb-1 text-[#204C80]">Shipment Request ID
               <span className="font-normal text-xs text-[#3C4EC3]"> *</span>
@@ -74,15 +74,15 @@ export default function EditShipmentForm({ shipment, onUpdate, onClose }) {
               <PiPackageLight className="text-[#204C80] mr-2 w-5 h-5" />
               <input
                 type="text"
-                value={formData.id}
-                onChange={(e) => handleChange('id', e.target.value)}
+                value={formData.requestId}
+                onChange={(e) => handleChange('requestId', e.target.value)}
                 placeholder="Shipment Request ID"
                 className="flex-1 outline-none text-sm"
                 required
               />
             </div>
           </div>
-
+          {/* requested Date */}
           <div>
             <label className="block mb-1 text-[#204C80]">Request Date
               <span className="font-normal text-xs text-[#3C4EC3]"> *</span>
@@ -98,7 +98,7 @@ export default function EditShipmentForm({ shipment, onUpdate, onClose }) {
               />
             </div>
           </div>
-
+          {/* Weight */}
           <div>
             <label className="block mb-1 text-[#204C80]">Weight
               <span className="font-normal text-xs text-[#3C4EC3]"> *</span>
@@ -115,7 +115,7 @@ export default function EditShipmentForm({ shipment, onUpdate, onClose }) {
               />
             </div>
           </div>
-
+          {/* shipmentType */}
           <div>
             <label className="block mb-1 text-[#204C80]">Type Of Goods
               <span className="font-normal text-xs text-[#3C4EC3]"> *</span>
@@ -124,15 +124,15 @@ export default function EditShipmentForm({ shipment, onUpdate, onClose }) {
               <PiPackageLight className="text-[#204C80] mr-2 w-5 h-5" />
               <input
                 type="text"
-                value={formData.goodsType}
-                onChange={(e) => handleChange('goodsType', e.target.value)}
+                value={formData.shipmentType}
+                onChange={(e) => handleChange('shipmentType', e.target.value)}
                 placeholder="Type Of Goods"
                 className="flex-1 outline-none text-sm"
                 required
               />
             </div>
           </div>
-
+          {/* shipment Dimensions */}
           <div>
             <label className="block mb-1 text-[#204C80]">Shipment Dimensions
               <span className="font-normal text-xs text-[#3C4EC3]"> *</span>
@@ -149,7 +149,7 @@ export default function EditShipmentForm({ shipment, onUpdate, onClose }) {
               />
             </div>
           </div>
-
+          {/* shipment Destination */}
           <div>
             <label className="block mb-1 text-[#204C80]">Shipment Destination
               <span className="font-normal text-xs text-[#3C4EC3]"> *</span>
@@ -158,8 +158,8 @@ export default function EditShipmentForm({ shipment, onUpdate, onClose }) {
               <HiOutlineMapPin className="text-[#204C80] mr-2 w-5 h-5" />
               <input
                 type="text"
-                value={formData.destination}
-                onChange={(e) => handleChange('destination', e.target.value)}
+                value={formData.recipientAddress}
+                onChange={(e) => handleChange('recipientAddress', e.target.value)}
                 placeholder="Shipment Destination"
                 className="flex-1 outline-none text-sm"
                 required
