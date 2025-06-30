@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import EditShipmentForm from '../../components/EditShipmentForm'
+import styles from './Details.module.css'
 
 import { IoIosCheckmarkCircleOutline, IoIosTimer } from "react-icons/io"
 import { PiWarningCircle } from "react-icons/pi";
 
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { AiOutlineEdit } from "react-icons/ai";
+import { BsStars } from "react-icons/bs";
 
 import { CiDeliveryTruck } from "react-icons/ci";
 import { FaPaperPlane, FaRegCommentDots } from 'react-icons/fa'
@@ -16,6 +18,9 @@ export default function ShipmentDetails({ shipments, setShipments }) {
   const { id } = useParams()
   const navigate = useNavigate()
   const [editModalOpen, setEditModalOpen] = useState(false)
+  const [userRating, setUserRating] = useState(0)      // store rating
+  const [ratingSubmitted, setRatingSubmitted] = useState(false) // switch view
+  const [hoverRating, setHoverRating] = useState(0)
 
   const [shipmentData, setShipmentData] = useState(() =>
     shipments.find((s) => s.id === id)
@@ -114,16 +119,57 @@ export default function ShipmentDetails({ shipments, setShipments }) {
                     })}</p>
                 </div>
               </div>
-              {/* Feedback button */}
-              <div className="flex gap-2 items-center py-4">
-                <div className="flex items-center border border-[#255C9C] rounded-2xl px-3 py-2 flex-1">
-                  <FaRegCommentDots className="text-[#204C80] mr-2" size={16} />
-                  <input type="text" placeholder="enter your feedback" className="text-sm focus:outline-none w-full" />
+              {/* Review Section */}
+              {!ratingSubmitted && (
+                <div className="py-4">
+                  <p className="text-[#B68B00] font-semibold mb-2">Please enter your rate for this journey</p>
+                  <div className={`flex gap-1 ${styles.ratingStars}`}>
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <svg
+                        key={star}
+                        onClick={() => {
+                          setUserRating(star)
+                          setRatingSubmitted(true)
+                        }}
+                        onMouseEnter={() => setHoverRating(star)}
+                        onMouseLeave={() => setHoverRating(0)}
+                        className={
+                          (hoverRating || userRating) >= star ? `${styles.filled}` : ''
+                        }
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        height="24"
+                      >
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14 2 9.27l6.91-1.01z" />
+                      </svg>
+                    ))}
+                  </div>
                 </div>
-                <button className="bg-[#255C9C] p-3 rounded-xl hover:bg-blue-900 cursor-pointer">
-                  <FaPaperPlane className="text-sm text-white" />
-                </button>
-              </div>
+              )}
+
+              {/* Feedback Section */}
+              {ratingSubmitted && (
+                <div className={`flex flex-col gap-2 py-4 ${styles.slideIn}`}>
+                  <div className="flex items-center gap-2">
+                    <div className="flex items-center border border-[#255C9C] rounded-2xl p-3 flex-1">
+                      <FaRegCommentDots className="text-[#204C80] mr-2" size={16} />
+                      <input
+                        type="text"
+                        placeholder="Enter your feedback"
+                        className="text-sm focus:outline-none w-full"
+                      />
+                    </div>
+                    <button className="bg-[#255C9C] p-3 rounded-xl hover:bg-blue-900 cursor-pointer">
+                      <FaPaperPlane className="text-sm text-white" />
+                    </button>
+                  </div>
+
+                  <p className="flex items-center gap-2 text-sm text-[#204C80] italic">
+                    <BsStars />You rated this journey {userRating} star{userRating > 1 && 's'}.
+                  </p>
+                </div>
+              )}
             </>
           )}
 
@@ -191,7 +237,7 @@ export default function ShipmentDetails({ shipments, setShipments }) {
                       month: 'long',
                       day: 'numeric'
                     })}
-                  </p>                
+                  </p>
                 </div>
                 <div>
                   <p className="mb-1">Shipping Weight</p>
